@@ -1,0 +1,22 @@
+{
+  "name": "exataevent",
+  "version": "1.0.0",
+  "description": "microservicio Events",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/albertoaguilar1/exataEvent.git"
+  },
+  "keywords": [
+    "events"
+  ],
+  "author": "jaguilarh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/albertoaguilar1/exataEvent/issues"
+  },
+  "homepage": "https://github.com/albertoaguilar1/exataEvent#readme"
+}
