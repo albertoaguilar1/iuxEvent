@@ -28,10 +28,5 @@ router.get('/',function(req,res){
 });
 
 
-
-
-
-
-
 //export api routers
 module.exports=router ;

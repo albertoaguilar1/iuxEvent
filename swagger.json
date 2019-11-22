@@ -1,0 +1,190 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "IUX API Events",
+      "description": " API CRUD de Events",
+      "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+      }
+    },
+    "host": "localhost:8082",
+    "basePath": "/api/",
+    "tags": [
+      {
+        "name": "Api:Events",
+        "description": "API para el manejo de operaciones con Events"
+      }
+    ],
+    "schemes": [
+      "http"
+    ],
+    "consumes": [
+      "application/json"
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "paths": {
+      "/events": {
+
+        "post": {
+          "tags": [
+            ""
+          ],
+          "description": "Create new Events in system",
+          "parameters": [
+            {
+              "name": "Events",
+              "in": "body",
+              "description": "User that we want to create",
+              "schema": {
+                "$ref": "#/definitions/Events"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "New event is created",
+              "schema": {
+                "$ref": "#/definitions/Events"
+              }
+            }
+          }
+        }
+        ,
+
+        "get": {
+          "tags": [
+            "Events"
+          ],
+          "summary": "Get all Events in system",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/Events"
+              }
+            }
+          }
+        }
+      },
+      "/event/{eventId}": {
+        "parameters": [
+          {
+            "name": "event",
+            "in": "path",
+            "required": true,
+            "description": "ID of Event that we want to find",
+            "type": "string"
+          }
+        ],
+        "get": {
+          "tags": [
+            "Events"
+          ],
+          "summary": "Get Events with given ID",
+          "responses": {
+            "200": {
+              "description": "User is found",
+              "schema": {
+                "$ref": "#/definitions/Events"
+              }
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete event with given ID",
+          "tags": [
+            "Events"
+          ],
+          "responses": {
+            "200": {
+              "description": "event is deleted",
+              "schema": {
+                "$ref": "#/definitions/Events"
+              }
+            }
+          }
+        },
+        "put": {
+          "summary": "Update event with give ID",
+          "tags": [
+            "Events"
+          ],
+          "parameters": [
+            {
+              "name": "event",
+              "in": "body",
+              "description": "User with new values of properties",
+              "schema": {
+                "$ref": "#/definitions/Events"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Events is updated",
+              "schema": {
+                "$ref": "#/definitions/Events"
+              }
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "Events": {
+        "required": [
+          
+          
+            "DateBeginEvent",
+            "DateEndEvent",
+            "NameEvent",
+            "DescriptEvent",
+            "OffertEvent",
+            "ImgEvent",
+            "StatusEvent"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "uniqueItems": true
+          },
+          "DateBeginEvent": {
+            "type": "date",
+            "uniqueItems": true
+          },
+          "DateEndEvent": {
+            "type": "date",
+            "uniqueItems": true
+          },
+          "NameEvent": {
+            "type": "string",
+            "uniqueItems": true
+          },
+          "DescriptEvent": {
+            "type": "string",
+            "uniqueItems": true
+          },
+          "OffertEvent": {
+            "type": "string",
+            "uniqueItems": true
+          },
+          "ImgEvent": {
+            "type": "boolean",
+            "uniqueItems": true
+          },
+          "StatusEvent": {
+            "type": "boolean",
+            "uniqueItems": true
+          }
+         
+        }
+      }
+    }
+  }  
