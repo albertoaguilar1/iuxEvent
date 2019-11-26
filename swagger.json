@@ -176,7 +176,7 @@
             "uniqueItems": true
           },
           "ImgEvent": {
-            "type": "boolean",
+            "type": "string",
             "uniqueItems": true
           },
           "StatusEvent": {

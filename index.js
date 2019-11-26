@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 
 //mongoose.connect('mongodb://localhost:27017/museum_db', { useNewUrlParser: true});
 
-mongoose.connect('mongodb://localhost:27017/museum_db', {
+mongoose.connect('mongodb://172.17.0.3:27017/museum_db', {
     useUnifiedTopology: true,
     useNewUrlParser: true})
     .then(() => console.log("Connected to Database"))
