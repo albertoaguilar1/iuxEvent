@@ -5,5 +5,5 @@ COPY package.json /usr/src/app/
 RUN npm install
 RUN npm i -s nodemon
 COPY . /usr/src/app
-EXPOSE 8080
+EXPOSE 8082
 CMD [ "npm", "start" ]
