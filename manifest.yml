@@ -1,0 +1,6 @@
+applications:
+- path: .
+  memory: 64M
+  instances: 1
+  name: exataEvent
+  buildpack: sdk-for-nodejs
