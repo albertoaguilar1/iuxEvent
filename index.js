@@ -25,11 +25,14 @@ var mongo_host = (process.env.MONGO_SERVICE_HOST || 'localhost' );
 var mongo_port = (process.env.MONGO_SERVICE_PORT || 27017 );
 var url = 'mongodb://'+mongo_host+':'+mongo_port+'/museum_db';
 
-mongoose.connect('url', {
+
+mongoose.connect(url, {
+ 
     useUnifiedTopology: true,
-    useNewUrlParser: true})
-    .then(() => console.log("Connected to Database"))
-    .catch(err => console.error("Error connecting db", err));
+    useNewUrlParser: true}  
+    )
+    .then(() => console.log("Connected to Database"+"____"+url))
+    .catch(err => console.error("Error connecting db", err + url));
 
 var db = mongoose.connection;
 
