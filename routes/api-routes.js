@@ -1,10 +1,10 @@
 //inicializa express router
-let router = require('express').Router();
+var router = require('express').Router();
 
 //set deafuilt API RESPONSE 
 
 //Import EventsController
-var eventsController = require('./eventsController');
+var eventsController = require('../controllers/eventsController');
   
 
     // Contact routes
@@ -22,10 +22,11 @@ router.route('/events/:events_id')
 
 router.get('/',function(req,res){
     res.json({
-        status:'API ITS working',
-        message:'Welcome to restHub crafted with lovesssss!'
+        status:'API Event WORKING',
+        message:'Bienvenido a la raiz del servicio'
     });
 });
+
 
 
 //export api routers
