@@ -23,6 +23,48 @@ exports.index = function (req, res) {
 };
 
 
+// Handle view users info
+exports.viewNameEvent= (req, res) => {
+    console.log("viewNameEvent"); 
+  // Validate request
+  if(!req.params.NameEvent) {
+    return res.status(400).send({
+        message: "User NameEvent can not be empty"
+    });
+}
+
+
+       Events.findOne({NameEvent:req.params.NameEvent})
+    .then(events => {
+        if(!events) {
+            return res.status(404).send({
+                message: "Event not found with name " + req.params.NameEvent,
+                status:'400',
+                data: err
+            });            
+        }
+        return res.status(200).send({
+            status: "success",
+            message: "Event found",
+            data: events
+        });
+   
+    }).catch(err => {
+        console.log(err)
+        if(err.kind === 'NameEvent') {
+            return res.status(404).send({
+                message: "Event not found with Name " + req.params.NameEvent,
+                status:'404',
+                data: err
+            });                
+        }
+        return res.status(500).send({
+            message: "Error retrieving Event with id " + req.params.NameEvent,
+            status:'500',
+            data: err
+        });
+    });
+};
 
 // Handle view event info
 exports.view= (req, res) => {
@@ -35,7 +77,7 @@ exports.view= (req, res) => {
 }
 
 Events.findById(req.params.events_id)
-    .then(users => {
+    .then(events => {
         if(!events) {
             return res.status(404).send({
                 message: "User not found with id " + req.params.events_id,
@@ -110,9 +152,6 @@ exports.new= (req, res) => {
 };
 
 
-
-
-
 // Update a event identified by the EventId in the request
 exports.update = (req, res) => {
 
@@ -123,7 +162,6 @@ exports.update = (req, res) => {
             message: "event id can not be empty"
         });
     }
-
 
       // Validate Request
       if(!req.body) {
@@ -176,11 +214,6 @@ exports.update = (req, res) => {
         });
     });
 };
-
-
-
-
-
 
 
 

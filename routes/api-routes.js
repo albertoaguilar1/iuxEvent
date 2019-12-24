@@ -18,7 +18,8 @@ router.route('/events/:events_id')
 .put(eventsController.update)
 .delete(eventsController.delete);
 
-
+router.route('/events/name/:NameEvent')
+.get(eventsController.viewNameEvent)
 
 router.get('/',function(req,res){
     res.json({
