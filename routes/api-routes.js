@@ -2,6 +2,8 @@
 var router = require('express').Router();
 
 //set deafuilt API RESPONSE 
+//cargamos la utilidad para verificar token
+var authenticated = require('../middlewares/authenticated');
 
 //Import EventsController
 var eventsController = require('../controllers/eventsController');
