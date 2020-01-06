@@ -11,17 +11,17 @@ var eventsController = require('../controllers/eventsController');
 
     // Contact routes
 router.route('/events')
-.get(eventsController.index)
-.post(eventsController.new);
+.get(authenticated,eventsController.index)
+.post(authenticated,eventsController.new);
 
 router.route('/events/:events_id')
-.get(eventsController.view)
-.patch(eventsController.update)
-.put(eventsController.update)
-.delete(eventsController.delete);
+.get(authenticated,eventsController.view)
+.patch(authenticated,eventsController.update)
+.put(authenticated,eventsController.update)
+.delete(authenticated,eventsController.delete);
 
 router.route('/events/name/:NameEvent')
-.get(eventsController.viewNameEvent)
+.get(authenticated,eventsController.viewNameEvent)
 
 router.get('/',function(req,res){
     res.json({
