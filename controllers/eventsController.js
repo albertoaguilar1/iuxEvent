@@ -7,29 +7,34 @@ var Events = require('../models/eventsModel');
 
 // Handle index actions
 exports.index = function (req, res) {
+    console.log("index")
     Events.get(function (err, events) {
         if (err) {
-            res.json({
+          
+            return res.status(404).send({
                 status: "error",
                 message: err,
             });
         }
-        res.json({
+
+           return res.status(200).send({
+            
             status: "success",
             message: "Events retrieved successfully",
             data: events
         });
+      
     });
 };
 
 
-// Handle view users info
+// Handle view Events info
 exports.viewNameEvent= (req, res) => {
     console.log("viewNameEvent"); 
   // Validate request
   if(!req.params.NameEvent) {
     return res.status(400).send({
-        message: "User NameEvent can not be empty"
+        message: "Event NameEvent can not be empty"
     });
 }
 
@@ -80,7 +85,7 @@ Events.findById(req.params.events_id)
     .then(events => {
         if(!events) {
             return res.status(404).send({
-                message: "User not found with id " + req.params.events_id,
+                message: "Event not found with id " + req.params.events_id,
                 status:'400',
                 data: err
             });            
@@ -113,9 +118,10 @@ Events.findById(req.params.events_id)
 exports.new= (req, res) => {
     console.log("new  " ); 
   // Validate request
-  if(!req.body) {
+  if(!req) {
     return res.status(400).send({
-        message: "Event body can not be empty"
+        message: "Event body can not be empty",
+        data: res.err
     });
 }
 
@@ -126,7 +132,7 @@ exports.new= (req, res) => {
     events.OffertEvent = req.body.OffertEvent;
     events.ImgEvent = req.body.ImgEvent;
     events.StatusEvent = req.body.StatusEvent;
-    events.DateBeginEvent = req.body.DateBeginEvent;
+    events.DateBeginEvent = req.body.DateBeginEvent ? req.body.DateBeginEvent : new Date();
     events.DateEndEvent = req.body.DateEndEvent;
 
 
@@ -180,7 +186,6 @@ exports.update = (req, res) => {
         OffertEvent : req.body.OffertEvent,
         ImgEvent : req.body.ImgEvent,
         StatusEvent : req.body.StatusEvent,
-        DateBeginEvent : req.body.DateBeginEvent,
         DateEndEvent : req.body.DateEndEvent 
      
     }, {new: true})

@@ -48,11 +48,11 @@ app.use(function(req, res, next) {
 // handle error, print stacktrace
 app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-
-    res.render('error', {
+    res.json({
         message: err.message,
         error: err
-    });
+      });
+      
 });
 
 // Exportamos la configuración

@@ -1,137 +1,285 @@
 "use strict"
 
- var assert = require('assert');
+
+
+var assert = require("assert");
+let chai = require("chai");
+let chaiHttp = require("chai-http");
+let server=require("../app");
+let should = chai.should();
+const expect = require('chai').expect;
+ var request2 = require('supertest');
  var request = require('supertest')
- var app = require('../app.js')
-
- var request = request("http://localhost:8082")
-
+chai.use(chaiHttp);
+var request = request("http://localhost:8082")
+var request2 = request2("http://localhost:8080")
 
  describe('events', function() {    
       describe('POST', function(){
-    it('Should  insert json events', function(done){
+    
+        let email = "testService@mia.com";
+        let password= "mia123";
+        let token = "";
+
+        it('Should  login', function(done){
+            request2.post('/api/login')
+            .send({EmailUser: email,  PasswordUser:password} )    
+            .expect('Content-Type', /json/)
+                .end( function(err,res){
+                    console.log(res.body.token)
+                  token=res.body.token   
+                  expect(res).to.have.status(200);                
+                 done();
+                });  
+            });
+   
+
+
+            it('Should  insert json events', function(done){
+                request.post('/api/events')
+                .set('Authorization', token)
+                .send({
+                NameEvent:"test",
+                DescriptEvent:"test",
+                DateBeginEvent:"",
+                DateEndEvent:"2019-10-25T05:00:00.000Z",
+                OffertEvent:"GRATIS ",
+                ImgEvent:"C:/PATH",
+                StatusEvent:true})
+                
+                    .expect('Content-Type', /json/)
+                    .end( function(err,res){   
+                    expect(res).to.have.status(200);
+                    expect(res.body.status).to.equals("success");
+                    expect(res.body.message).to.equals("New event created!");
+                    done();
+            });
+    
+     });
+
+
+     it('Should  insert json events', function(done){
         request.post('/api/events')
+        .set('Authorization', token)
         .send({
-        NameEvent:"test",
+     
         DescriptEvent:"test",
-        DateBeginEvent:"2019-10-22T05:00:00.000Z",
+        DateBeginEvent:"",
         DateEndEvent:"2019-10-25T05:00:00.000Z",
         OffertEvent:"GRATIS ",
         ImgEvent:"C:/PATH",
         StatusEvent:true})
         
             .expect('Content-Type', /json/)
-            .expect(200, done);
+            .end( function(err,res){   
+             expect(res.body.data._message).to.equal("Events validation failed")
+            expect(res).to.have.status(500);
+            done();
     });
 
-    it('Should  not insert json events why NameEvent is empty', function(done){
-        request.post('/api/events')
-        .send({NameEvent:"",DescriptEvent:"test",DateBeginEvent:"2019-10-22T05:00:00.000Z",DateEndEvent:"2019-10-25T05:00:00.000Z",OffertEvent:"GRATIS ",ImgEvent:"C:/PATH",StatusEvent:true})
-            .expect('Content-Type', /json/)
-            .expect(500, done);
-    });
+});
 
-    it('Should  not insert the user why reques json events  is empty', function(done){
-        request.post('/api/events')  
-            .expect('Content-Type', /json/)
-            .expect(500, done);
-    });
+it('Should  insert json events', function(done){
+    request.post('/api/events')
+    .set('Authorization', token)
+    .send({
+ })
+    
+        .expect('Content-Type', /json/)
+        .end( function(err,res){   
+         expect(res.body.data._message).to.equal("Events validation failed")
+        expect(res).to.have.status(500);
+        done();
 });
 
 
 
-     describe('GET', function(){
-         var id ="";
-         it('Should return json as default data format', function(done){
-             request.get('/api/events')
-                 .expect('Content-Type', /json/)
-                 .expect(200, done);
-         });
 
-                 it("should get a single name record", (done) => {                      
-                      request.get('/api/events/name/test')
-                       .expect('Content-Type', /json/)
-                       .end( function(err,res){
-                           id=res.body.data._id
-                           console.log("el valor "+ id)
-                           done();
-                          });          
-                       });  
 
-                 it("should get a single events record", (done) => { 
-                    request.get('/api/events'+`/${id}`)
-                    .expect('Content-Type', /json/)
-                    .expect(200, done);
-                         });      
-                         
-                         
-                         it("should not get a single events record", (done) => {        
-                            request.get('/api/events/123')
+});
+
+        });//end post 
+
+        describe('GET', function(){
+            let email = "testService@mia.com";
+            let password= "mia123";
+            let token = "";
+            let id ="";
+    
+            it('Should  login', function(done){
+                request2.post('/api/login')
+                .send({EmailUser: email,  PasswordUser:password} )    
+                .expect('Content-Type', /json/)
+                    .end( function(err,res){
+                      token=res.body.token   
+                      expect(res).to.have.status(200);                
+                     done();
+                    });  
+                });
+     
+            it('Should return json as default data format', function(done){
+                request.get('/api/events')
+                .set('Authorization', token)
+                .expect('Content-Type', /json/)
+                .end( function(err,res){   
+                expect(res).to.have.status(200);
+                done();
+            });
+        });
+   
+                    it("should get a single  record name", (done) => {                      
+                         request.get('/api/events/name/test')
+                         .set('Authorization', token)
                             .expect('Content-Type', /json/)
-                            .expect(404, done);
-                                 });
+                            .end( function(err,res){   
+                           
+                              
+                                id =res.body.data._id
+                            expect(res).to.have.status(200);
+                            done();
+                             });          
+                          });  
+
+                          it("should get a single  record id", (done) => {                      
+                            request.get('/api/events'+`/${id}`)
+                            .set('Authorization', token)
+                               .expect('Content-Type', /json/)
+                               .end( function(err,res){   
+                               expect(res).to.have.status(200);
+                               done();
+                                });          
+                             });  
+
+                             it("should not get a single  record id no exist", (done) => {                      
+                                request.get('/api/events/4')
+                                .set('Authorization', token)
+                                   .expect('Content-Type', /json/)
+                                   .end( function(err,res){   
+                                   expect(res).to.have.status(404);
+                  
+                                   
+                                   done();
+                                    });          
+                                 });  
+    });   //END GET
+
+    describe('PUT', function(){
+        let email = "testService@mia.com";
+        let password= "mia123";
+        let token = "";
+        let id ="";
+
+        it('Should  login', function(done){
+            request2.post('/api/login')
+            .send({EmailUser: email,  PasswordUser:password} )    
+            .expect('Content-Type', /json/)
+                .end( function(err,res){
+                  token=res.body.token   
+                  expect(res).to.have.status(200);                
+                 done();
+                });  
+            });
+
+
+         it("should get a single  record name", (done) => {                      
+                         request.get('/api/events/name/test')
+                         .set('Authorization', token)
+                            .expect('Content-Type', /json/)
+                            .end( function(err,res){   
+                                id =res.body.data._id
+                            expect(res).to.have.status(200);
+                            done();
+                             });          
+                          });  
+
+
+     
+         it('Should  update json events', function(done){
+             console .log('/api/events'+`/${id}`);
+             request.put('/api/events'+`/${id}`)
+             .set('Authorization', token)
+             .send({NameEvent:"test",
+             DescriptEvent:"test2",
+             DateEndEvent:"2019-10-25T05:00:00.000Z",
+             DateBeginEvent:"",
+             OffertEvent:"GRATIS ",
+             ImgEvent:"C:/PATH",
+             StatusEvent:true})
+             .expect('Content-Type', /json/)
+             .end( function(err,res){             
+                expect(res).to.have.status(200);
+                done();
+         });
+        });
+     
+         it('Should  update json events', function(done){
+             request.put('/api/events'+`/${id}`)
+             .set('Authorization', token)
+             .send({
+                 NameEvent:"",
+                 DescriptEvent:"",
+                 DateBeginEvent:"2019-10-22T05:00:00.000Z",
+                 DateEndEvent:"2019-10-25T05:00:00.000Z",
+                 OffertEvent:"GRATIS ",
+                 ImgEvent:"C:/PATH",
+                 StatusEvent:true})
+             .expect('Content-Type', /json/)
+             .end( function(err,res){             
+                expect(res).to.have.status(500);
+                done();
+         });
      
      });
+    });
+     
 
 
 
 
+    describe('DELETE', function(){
+        let email = "testService@mia.com";
+        let password= "mia123";
+        let token = "";
+        let id ="";
 
- describe('put', function(){
-   let id="";
-    it("should get a single user_email record", (done) => {                      
-        //  request.get('api/users/email'+`/${valor}`) 
-          request.get('/api/events/name/test')
-           .expect('Content-Type', /json/)
-           .end( function(err,res){
-               id=res.body.data._id
-               console.log("el valor "+ id)
-               done();
-              });          
-           }); 
-
-    it('Should  insert json events', function(done){
-        request.put('/api/events'+`/${id}`)
-        .send({NameEvent:"test",DescriptEvent:"test",DateBeginEvent:"2019-10-22T05:00:00.000Z",DateEndEvent:"2019-10-25T05:00:00.000Z",OffertEvent:"GRATIS ",ImgEvent:"C:/PATH",StatusEvent:true})
+        it('Should  login', function(done){
+            request2.post('/api/login')
+            .send({EmailUser: email,  PasswordUser:password} )    
             .expect('Content-Type', /json/)
-            .expect(200, done);
-    });
+                .end( function(err,res){
+                  token=res.body.token   
+                  expect(res).to.have.status(200);                
+                 done();
+                });  
+            });
 
-    it('Should  insert json events', function(done){
-        request.put('/api/events'+`/${id}`)
-        .send({NameEvent:"",DescriptEvent:"",DateBeginEvent:"2019-10-22T05:00:00.000Z",DateEndEvent:"2019-10-25T05:00:00.000Z",OffertEvent:"GRATIS ",ImgEvent:"C:/PATH",StatusEvent:true})
-            .expect(500, done);
-    });
+
+         it("should get a single  record name", (done) => {                      
+                         request.get('/api/events/name/test')
+                         .set('Authorization', token)
+                            .expect('Content-Type', /json/)
+                            .end( function(err,res){   
+                                id =res.body.data._id
+                            expect(res).to.have.status(200);
+                            done();
+                             });          
+                          });  
+    
+    
+        it('Should  remove json events', function(done){     
+          request.delete('/api/events'+`/${id}`)
+          .set('Authorization', token)
+          .expect('Content-Type', /json/)
+                .expect(200, done);
+        });
+    
+        it('Should  remove json events', function(done){
+            request.delete('/api/events'+`/${id}`)
+            .set('Authorization', token)
+            .expect('Content-Type', /json/)
+                  .expect(500, done);
+          });
 
 });
 
-
-describe('delete', function(){
-    let id="";
-    it("should get a single user_email record", (done) => {                      
-        //  request.get('api/users/email'+`/${valor}`) 
-          request.get('/api/events/name/test')
-           .expect('Content-Type', /json/)
-           .end( function(err,res){
-               id=res.body.data._id
-               console.log("el valor "+ id)
-               done();
-              });          
-           });  
-
-
-    it('Should  remove json events', function(done){     
-      request.delete('/api/events'+`/${id}`)
-      .expect('Content-Type', /json/)
-            .expect(200, done);
-    });
-
-    it('Should  remove json events', function(done){
-        request.delete('/api/events'+`/${id}`)
-        .expect('Content-Type', /json/)
-              .expect(500, done);
-      });
-});
-
-//la funcion events
 });
