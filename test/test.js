@@ -269,16 +269,22 @@ it('Should  insert json events', function(done){
         it('Should  remove json events', function(done){     
           request.delete('/api/events'+`/${id}`)
           .set('Authorization', token)
-          .expect('Content-Type', /json/)
-                .expect(200, done);
+          .end( function(err,res){  
+            expect(res).to.have.status(200);                
+           done();
         });
+    });
     
-        it('Should  remove json events', function(done){
+        it('Should not  remove json events', function(done){
             request.delete('/api/events'+`/${id}`)
             .set('Authorization', token)
             .expect('Content-Type', /json/)
-                  .expect(500, done);
+            .end( function(err,res){ 
+                expect(res).to.have.status(500);                
+               done();
+            
           });
+        });
 
 });
 
