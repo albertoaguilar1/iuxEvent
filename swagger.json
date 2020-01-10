@@ -14,7 +14,8 @@
     "tags": [
       {
         "name": "Api:Events",
-        "description": "API para el manejo de operaciones con Events"
+        "description": "API para el manejo de operaciones con Events",
+        "summary":"API para el manejo de operaciones con Events"
       }
     ],
     "schemes": [
@@ -31,10 +32,21 @@
 
         "post": {
           "tags": [
-            ""
+            "Events"
           ],
+          "summary": "Create new Events in system",
           "description": "Create new Events in system",
+          
           "parameters": [
+            {
+              "name": "Authorization",
+              "in": "header",
+              "description": "Authorization",
+              "schema": {
+              "type":"String",
+              "format":"String",
+              "required":true
+              } },
             {
               "name": "Events",
               "in": "body",
@@ -63,6 +75,17 @@
             "Events"
           ],
           "summary": "Get all Events in system",
+          "parameters": [
+            {
+              "name": "Authorization",
+              "in": "header",
+              "description": "Authorization",
+              "schema": {
+              "type":"String",
+              "format":"String",
+              "required":true
+              } }
+            ],
           "responses": {
             "200": {
               "description": "OK",
@@ -73,14 +96,24 @@
           }
         }
       },
-      "/event/{eventId}": {
+      "/events/{eventId}": {
         "parameters": [
           {
-            "name": "event",
+            "name": "Authorization",
+            "in": "header",
+            "description": "Authorization",
+            "schema": {
+            "type":"String",
+            "format":"String",
+            "required":true
+            } },
+          {
+            "name": "eventId",
             "in": "path",
             "required": true,
             "description": "ID of Event that we want to find",
             "type": "string"
+          
           }
         ],
         "get": {
@@ -96,31 +129,33 @@
               }
             }
           }
-        },
-        "delete": {
-          "summary": "Delete event with given ID",
-          "tags": [
-            "Events"
-          ],
-          "responses": {
-            "200": {
-              "description": "event is deleted",
-              "schema": {
-                "$ref": "#/definitions/Events"
-              }
-            }
-          }
-        },
-        "put": {
+        }, "put": {
           "summary": "Update event with give ID",
           "tags": [
             "Events"
           ],
           "parameters": [
             {
-              "name": "event",
+              "name": "Authorization",
+              "in": "header",
+              "description": "Authorization",
+              "schema": {
+              "type":"String",
+              "format":"String",
+              "required":true
+              } },
+            {
+              "name": "eventId",
+              "in": "path",
+              "required": true,
+              "description": "ID of Event that we want to find",
+              "type": "string"
+            
+            }
+            ,  {
+              "name": "Events",
               "in": "body",
-              "description": "User with new values of properties",
+              "description": "Event that we want to create",
               "schema": {
                 "$ref": "#/definitions/Events"
               }
@@ -134,7 +169,44 @@
               }
             }
           }
+        },
+        "delete": {
+          "summary": "Delete event with given ID",
+          "tags": [
+            "Events"
+          ],
+          "parameters": [
+            {
+              "name": "Authorization",
+              "in": "header",
+              "description": "Authorization",
+              "schema": {
+              "type":"String",
+              "format":"String",
+              "required":true
+              } },
+            {
+              "name": "eventId",
+              "in": "path",
+              "required": true,
+              "description": "ID of Event that we want to find",
+              "type": "string"
+            
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "event is deleted",
+              "schema": {
+                "$ref": "#/definitions/Events"
+              }
+            }
+          }
         }
+       
+        
+   
+        
       }
     },
     "definitions": {
@@ -156,11 +228,11 @@
             "uniqueItems": true
           },
           "DateBeginEvent": {
-            "type": "date",
+            "type": "String",
             "uniqueItems": true
           },
           "DateEndEvent": {
-            "type": "date",
+            "type": "String",
             "uniqueItems": true
           },
           "NameEvent": {
