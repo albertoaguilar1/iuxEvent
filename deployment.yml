@@ -26,7 +26,7 @@ spec:
     spec:
       containers:
       - name: exataevent
-        image: us.icr.io/iux-miaspace1/iux-events
+        image: us.icr.io/spacemia/wseventv1:1-master-e5d99c66-20200210175509
         ports:
         - containerPort: 8082
 
