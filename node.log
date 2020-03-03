@@ -398,3 +398,4 @@
 ::1 - - [10/Jan/2020:01:41:40 +0000] "GET /api-docs/event/swagger-ui-init.js HTTP/1.1" 304 - "http://localhost:8082/api-docs/event/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36"
 ::1 - - [10/Jan/2020:01:41:40 +0000] "GET /api-docs/event/favicon-32x32.png HTTP/1.1" 200 628 "http://localhost:8082/api-docs/event/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36"
 ::1 - - [10/Jan/2020:01:42:21 +0000] "DELETE /api/events/5e17d31b811df55cc81b3739 HTTP/1.1" 200 609 "http://localhost:8082/api-docs/event/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36"
+::1 - - [03/Mar/2020:19:58:16 +0000] "POST /api/events?= HTTP/1.1" 200 617 "-" "PostmanRuntime/7.22.0"
