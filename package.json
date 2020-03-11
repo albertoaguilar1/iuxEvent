@@ -1,5 +1,5 @@
 {
-  "name": "exataevent",
+  "name": "iuxevent",
   "version": "1.0.0",
   "description": "microservicio Events",
   "main": "index.js",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/albertoaguilar1/exataEvent.git"
+    "url": "git+https://github.com/albertoaguilar1/iuxEvent.git"
   },
   "keywords": [
     "events"
@@ -18,9 +18,9 @@
   "author": "jaguilarh",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/albertoaguilar1/exataEvent/issues"
+    "url": "https://github.com/albertoaguilar1/iuxEvent/issues"
   },
-  "homepage": "https://github.com/albertoaguilar1/exataEvent#readme",
+  "homepage": "https://github.com/albertoaguilar1/iuxEvent#readme",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "bcryptjs": "^2.4.3",
@@ -42,7 +42,6 @@
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "mocha": "^5.2.0",
-    "morgan": "^1.9.1",
     "nodemon": "^1.17.4",
     "supertest": "^4.0.2"
   }
